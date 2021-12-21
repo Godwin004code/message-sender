@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" id="form">
+        <p>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+        </p>
+        <p>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email">
+        </p>
+        <p>
+            <label for="mes">Message:</label>
+            <textarea name="mes" id="mes" cols="30" rows="10"></textarea>
+        </p>
+        <button id="send" type="button">Send Message</button>
+    </form>
+    <script>
+        function drawElement(id) {
+            return document.getElementById(id)
+        }
+        drawElement('send').addEventListener('click', function(e) {
+            e.preventDefault()
+            Email.send({
+                Host: "smtp.mailtrap.io",
+                Username: "7cb8cd35208499",
+                Password: "33515185e0599c",
+                To: "godwinalugbin004@gmail.com",
+                From: drawElement('form').elements['email'].value,
+                Subject: "Send me message",
+                Body: drawElement('form').elements['mes'].value + "<br>" +  drawElement('form').elements['name'].value  
+            })
+            .then(msg => alert("Successfully sent"))
+            .catch(msg => alert("An error occured"))
+
+            drawElement('form').reset()
+            
+        })
+    </script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+</body>
+</html>
